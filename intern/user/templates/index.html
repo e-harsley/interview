@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="header__logo-box">
+          <h1 class="header__logo">User management</h1>
+          <ul class="nav-links">
+            <li>
+              <a href="/admin" class="btn btn--nav">Login To Admin</a>
+            </li>
+          </ul>
+        </div>
+        <div class="header__text--box">
+          <div class="header__text--desc">
+            <h1 class="header__text--heading">
+              A mini task <br />
+              to handle users<br />
+              management at the backend
+            </h1>
+            <p class="header__text--meta">
+                <p class="text-size">Task Functionality</p>
+              <ul class="text-size">
+                  <li>Create superuser</li>
+                  <li>Django Admin dashboard page with user metrics</li>
+                  <li>Action button to enable and disable active users</li>
+                  <li>Bulk email messaging to all users.</li>
+              </ul>
+            </p>
+            <a href="/admin" class="btn btn--header">Click to visit admin page</a>
+          </div>
+          <div class="header__text--img">
+            <img
+              src="{% static 'img/bd23fc38d47da7484279b5f45e9b7e4e.png' %}"
+              class="img--top"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>

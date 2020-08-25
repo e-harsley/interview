@@ -1,0 +1,94 @@
+{% extends "admin/change_list.html" %} {% load static %}
+
+<!-- Override extrahead to add Chart.js -->
+{% block extrahead %} {{ block.super }}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const ctx = document.getElementById("myChart").getContext("2d");
+
+    const chartData = {{ chart_data | safe }};
+
+    // Parse the dates to JS
+    chartData.forEach((d) => {
+      d.x = new Date(d.date);
+    });
+
+    // Render the chart
+    const chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        datasets: [
+          {
+            label: "Registered Users",
+            data: chartData,
+            backgroundColor: "#79aec8",
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                unit: "day",
+                round: "day",
+                displayFormats: {
+                  day: "MMM D",
+                },
+              },
+            },
+          ],
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+  });
+</script>
+{% endblock %} {% block content %}
+<!-- Render our chart -->
+
+<style>
+  .btn {
+    padding: 0.5rem 2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    text-decoration: none;
+    margin: 20px 0px;
+  }
+  .btn-green {
+    background-color: #447e9b;
+    color: #ffffff;
+  }
+  .btn-conta {
+    margin: 30px;
+  }
+</style>
+
+<div style="width: 90%;">
+  <canvas
+    style="margin-bottom: 30px; width: 60%; height: 50%;"
+    id="myChart"
+  ></canvas>
+</div>
+<div class="btn-conta">
+  <a href="{% url 'user:send-email' %}" class="button">Send Email</a>
+</div>
+
+{{ block.super }}
+
+<!-- Render the rest of the ChangeList view -->
+{% endblock %}
